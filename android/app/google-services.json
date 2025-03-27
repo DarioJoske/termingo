@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "243493938341",
+    "project_id": "termingo-eda09",
+    "storage_bucket": "termingo-eda09.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243493938341:android:92ec25a9b30cd6ce52594c",
+        "android_client_info": {
+          "package_name": "com.example.termingo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXVhrrclqIXG86PdovxP9Id0cziGhut70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
