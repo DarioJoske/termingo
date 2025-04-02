@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:termingo/src/core/router/routes.dart';
 import 'package:termingo/src/core/utils/init_dependencies.dart';
@@ -8,6 +9,9 @@ import 'package:termingo/src/features/auth/presentation/bloc/auth/auth_bloc.dart
 import 'package:termingo/src/features/auth/presentation/pages/login_page.dart';
 import 'package:termingo/src/features/auth/presentation/pages/register_page.dart';
 import 'package:termingo/src/features/home/presentation/pages/home_page.dart';
+import 'package:termingo/src/features/teams/presentation/bloc/teams_bloc.dart';
+import 'package:termingo/src/features/teams/presentation/pages/create_team_page.dart';
+import 'package:termingo/src/features/teams/presentation/pages/team_page.dart';
 
 class AppRouter {
   static final router = GoRouter(
@@ -30,6 +34,43 @@ class AppRouter {
         path: Routes.registerRoute,
         pageBuilder: (context, state) {
           return NoTransitionPage(child: RegisterPage());
+        },
+      ),
+      GoRoute(
+        path: Routes.createTeamRoute,
+        pageBuilder: (context, state) {
+          final currentUserId = state.extra != null ? (state.extra as Map<String, dynamic>)['userId'] : null;
+          return CustomTransitionPage(
+            transitionDuration: const Duration(milliseconds: 300),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOut;
+
+              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+            child: BlocProvider(
+              create: (context) => TeamsBloc(createTeam: serviceLocator(), getTeams: serviceLocator()),
+              child: CreateTeamPage(currentUserId: currentUserId),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.teamRoute,
+        name: 'team',
+        pageBuilder: (context, state) {
+          final teamId = state.pathParameters['teamId'];
+
+          return NoTransitionPage(
+            child: BlocProvider(
+              create: (context) => TeamsBloc(getTeams: serviceLocator(), createTeam: serviceLocator()),
+              child: TeamPage(teamId: teamId!),
+            ),
+          );
         },
       ),
     ],

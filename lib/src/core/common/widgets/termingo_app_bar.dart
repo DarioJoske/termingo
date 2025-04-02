@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:termingo/src/core/router/routes.dart';
 
 class TermingoAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TermingoAppBar({super.key, required GlobalKey<ScaffoldState> scaffoldKey}) : _scaffoldKey = scaffoldKey;
@@ -40,8 +42,10 @@ class TermingoAppBar extends StatelessWidget implements PreferredSizeWidget {
                             leading: const Icon(Icons.groups),
                             title: const Text('Create a new team'),
                             onTap: () {
-                              // Navigate to home page
-                              Navigator.pop(context);
+                              context.push(
+                                Routes.createTeamRoute,
+                                extra: {'userId': FirebaseAuth.instance.currentUser?.uid},
+                              );
                             },
                           ),
                           ListTile(

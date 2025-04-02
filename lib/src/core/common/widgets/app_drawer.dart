@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:termingo/src/core/common/cubit/current_user_cubit.dart';
+import 'package:termingo/src/features/teams/presentation/bloc/teams_bloc.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -17,7 +19,7 @@ class AppDrawer extends StatelessWidget {
                 return UserAccountsDrawerHeader(
                   accountName: Text(state.user.displayName ?? 'No Name'),
                   accountEmail: Text(state.user.email ?? 'No Email'),
-                  currentAccountPicture: CircleAvatar(backgroundImage: NetworkImage(state.user.photoURL ?? '')),
+                  currentAccountPicture: CircleAvatar(backgroundColor: Colors.grey),
                 );
               } else {
                 return const UserAccountsDrawerHeader(
@@ -28,25 +30,27 @@ class AppDrawer extends StatelessWidget {
               }
             },
           ),
-          ListView(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            children: [
-              ListTile(
-                title: const Text('Team 1'),
-                onTap: () {
-                  // Handle item tap
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: const Text('Team 2'),
-                onTap: () {
-                  // Handle item tap
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+          BlocBuilder<TeamsBloc, TeamsState>(
+            builder: (context, state) {
+              if (state is TeamsLoaded) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.teams.length,
+                    itemBuilder: (context, index) {
+                      final team = state.teams[index];
+                      return ListTile(
+                        title: Text(team.name),
+                        onTap: () {
+                          // context.pop();
+                          context.pushNamed('team', pathParameters: {'teamId': team.id});
+                        },
+                      );
+                    },
+                  ),
+                );
+              }
+              return const Expanded(child: Center(child: Text('No teams available')));
+            },
           ),
         ],
       ),

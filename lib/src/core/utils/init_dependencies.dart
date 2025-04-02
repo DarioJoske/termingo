@@ -11,11 +11,18 @@ import 'package:termingo/src/features/auth/domain/usecases/auth_state_changes.da
 import 'package:termingo/src/features/auth/domain/usecases/user_sign_in.dart';
 import 'package:termingo/src/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:termingo/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:termingo/src/features/teams/data/data_sources/teams_data_source.dart';
+import 'package:termingo/src/features/teams/data/repository/teams_repository_impl.dart';
+import 'package:termingo/src/features/teams/domain/repositories/team_repository.dart';
+import 'package:termingo/src/features/teams/domain/usecases/create_team.dart';
+import 'package:termingo/src/features/teams/domain/usecases/get_teams.dart';
+import 'package:termingo/src/features/teams/presentation/bloc/teams_bloc.dart';
 
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependecies() async {
   _initAuth();
+  _initTeams();
 
   serviceLocator.registerLazySingleton(() => FirebaseAuth.instance);
   serviceLocator.registerLazySingleton(() => FirebaseFirestore.instance);
@@ -38,4 +45,13 @@ void _initAuth() {
       userSignIn: serviceLocator(), //
     ),
   );
+}
+
+void _initTeams() {
+  serviceLocator.registerFactory<TeamsDataSource>(() => TeamDataSourceImpl(firebaseFirestore: serviceLocator()));
+  serviceLocator.registerFactory<TeamRepository>(() => TeamsRepositoryImpl(serviceLocator()));
+  serviceLocator.registerFactory<GetTeamsUsecase>(() => GetTeamsUsecase(teamRepository: serviceLocator()));
+  serviceLocator.registerFactory<CreateTeamUsecase>(() => CreateTeamUsecase(teamRepository: serviceLocator()));
+
+  serviceLocator.registerLazySingleton(() => TeamsBloc(createTeam: serviceLocator(), getTeams: serviceLocator()));
 }
