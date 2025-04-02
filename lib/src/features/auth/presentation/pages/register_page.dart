@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:termingo/src/core/router/routes.dart';
 import 'package:termingo/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
-import 'package:termingo/src/routes.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -28,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text(state.message), backgroundColor: Colors.red));
-            } else if (state is AuthSuccess) {
+            } else if (state is AuthAuthenticated) {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(const SnackBar(content: Text('Registration successful!'), backgroundColor: Colors.green));

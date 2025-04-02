@@ -1,7 +1,5 @@
 part of 'auth_bloc.dart';
 
-enum AuthStatus { initial, authenticated, unauthenticated, loading, error }
-
 sealed class AuthState {
   const AuthState();
 }
@@ -10,10 +8,14 @@ final class AuthInitial extends AuthState {}
 
 final class AuthLoading extends AuthState {}
 
-final class AuthSuccess extends AuthState {
-  final AppUser user;
+final class AuthAuthenticated extends AuthState {
+  final User user;
 
-  const AuthSuccess({required this.user});
+  const AuthAuthenticated({required this.user});
+}
+
+final class AuthUnauthenticated extends AuthState {
+  const AuthUnauthenticated();
 }
 
 final class AuthError extends AuthState {

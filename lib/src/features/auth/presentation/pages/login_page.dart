@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:termingo/src/core/router/routes.dart';
 import 'package:termingo/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
-import 'package:termingo/src/routes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text(state.message), backgroundColor: Colors.red));
-            } else if (state is AuthSuccess) {
+            } else if (state is AuthAuthenticated) {
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
                 ..showSnackBar(const SnackBar(content: Text('Login successful!'), backgroundColor: Colors.green));
