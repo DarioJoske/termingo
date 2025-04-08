@@ -39,6 +39,13 @@ class TermingoAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ),
                           // SizedBox(height: 24),
                           ListTile(
+                            leading: const Icon(Icons.group_add),
+                            title: const Text('Join a team'),
+                            onTap: () {
+                              context.push(Routes.joinTeamRoute);
+                            },
+                          ),
+                          ListTile(
                             leading: const Icon(Icons.groups),
                             title: const Text('Create a new team'),
                             onTap: () {

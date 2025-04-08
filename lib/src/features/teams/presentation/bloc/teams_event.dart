@@ -16,3 +16,10 @@ final class TeamsChanged extends TeamsEvent {
 
   const TeamsChanged({required this.teams});
 }
+
+final class JoinTeam extends TeamsEvent {
+  final String teamId;
+  final String userId;
+
+  const JoinTeam({required this.teamId, required this.userId});
+}

@@ -27,8 +27,19 @@ class TeamsRepositoryImpl implements TeamRepository {
       final result = _teamsDataSource.getTeams(userId: userId);
 
       return result;
-    } catch (e) {
-      throw ServerFailure(message: e.toString(), statusCode: '500');
+    } on ServerException catch (e) {
+      throw ServerFailure(message: e.message, statusCode: e.statusCode);
+    }
+  }
+
+  @override
+  ResultFuture<void> joinTeam({required String teamId, required String userId}) async {
+    try {
+      final result = await _teamsDataSource.joinTeam(teamId: teamId, userId: userId);
+
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
     }
   }
 }

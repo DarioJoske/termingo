@@ -18,6 +18,8 @@ final class TeamsCreated extends TeamsState {
   const TeamsCreated({required this.team});
 }
 
+final class TeamsJoined extends TeamsState {}
+
 final class TeamsError extends TeamsState {
   final String message;
   const TeamsError({required this.message});

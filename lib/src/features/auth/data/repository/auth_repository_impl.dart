@@ -40,4 +40,8 @@ class AuthRepositoryImpl implements AuthRepository {
       throw ServerFailure(message: e.toString(), statusCode: '500');
     }
   }
+
+  @override
+  // TODO: implement currentUser
+  User? get currentUser => _remoteDataSource.currentUser;
 }

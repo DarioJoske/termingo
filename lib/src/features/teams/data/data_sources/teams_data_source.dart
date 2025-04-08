@@ -6,6 +6,7 @@ import 'package:termingo/src/features/teams/data/models/team_model.dart';
 abstract interface class TeamsDataSource {
   Future<TeamModel> createTeam({required String teamName, required String userId});
   Stream<List<TeamModel>> getTeams({required String userId});
+  Future<void> joinTeam({required String teamId, required String userId});
 }
 
 class TeamDataSourceImpl implements TeamsDataSource {
@@ -53,6 +54,25 @@ class TeamDataSourceImpl implements TeamsDataSource {
       }
     } on FirebaseException catch (e) {
       throw ServerException(message: e.toString(), statusCode: '500');
+    }
+  }
+
+  @override
+  Future<void> joinTeam({required String teamId, required String userId}) async {
+    try {
+      final teamRef = firebaseFirestore.collection('teams').doc(teamId);
+      final userRef = firebaseFirestore.collection('users').doc(userId);
+
+      await firebaseFirestore.runTransaction((transaction) async {
+        transaction.update(teamRef, {
+          'members': FieldValue.arrayUnion([userId]),
+        });
+        transaction.update(userRef, {
+          'teams': FieldValue.arrayUnion([teamId]),
+        });
+      });
+    } on FirebaseException catch (e) {
+      throw ServerException(message: e.message ?? 'Something went wrong', statusCode: e.code);
     }
   }
 }

@@ -1,1 +1,44 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"termingo-eda09","appId":"1:243493938341:android:92ec25a9b30cd6ce52594c","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"termingo-eda09","appId":"1:243493938341:ios:345d02571fd7f16952594c","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"termingo-eda09","appId":"1:243493938341:ios:345d02571fd7f16952594c","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"termingo-eda09","configurations":{"android":"1:243493938341:android:92ec25a9b30cd6ce52594c","ios":"1:243493938341:ios:345d02571fd7f16952594c","macos":"1:243493938341:ios:345d02571fd7f16952594c","web":"1:243493938341:web:f25b6ffea6a4157352594c"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "termingo-eda09",
+          "appId": "1:243493938341:android:92ec25a9b30cd6ce52594c",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "termingo-eda09",
+          "appId": "1:243493938341:ios:345d02571fd7f16952594c",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "termingo-eda09",
+          "appId": "1:243493938341:ios:345d02571fd7f16952594c",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "termingo-eda09",
+          "configurations": {
+            "android": "1:243493938341:android:92ec25a9b30cd6ce52594c",
+            "ios": "1:243493938341:ios:345d02571fd7f16952594c",
+            "macos": "1:243493938341:ios:345d02571fd7f16952594c",
+            "web": "1:243493938341:web:f25b6ffea6a4157352594c"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

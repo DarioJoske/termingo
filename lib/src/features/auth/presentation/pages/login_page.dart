@@ -16,6 +16,14 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  bool _isPasswordVisible = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,8 +67,17 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _passwordController,
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            // Toggle password visibility
+                            _togglePasswordVisibility();
+                          },
+                          icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                        ),
+                      ),
+                      obscureText: !_isPasswordVisible,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';

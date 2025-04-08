@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:termingo/src/core/common/cubit/current_user_cubit.dart';
 import 'package:termingo/src/core/common/widgets/app_drawer.dart';
 import 'package:termingo/src/core/common/widgets/termingo_app_bar.dart';
 import 'package:termingo/src/core/utils/init_dependencies.dart';
@@ -17,19 +18,25 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TeamsBloc(getTeams: serviceLocator(), createTeam: serviceLocator()),
-      child: Scaffold(
-        key: _scaffoldKey,
-        drawer: AppDrawer(),
-        appBar: TermingoAppBar(scaffoldKey: _scaffoldKey),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [const Text('Welcome to the Home Page!')],
+    return BlocBuilder<CurrentUserCubit, CurrentUserState>(
+      builder: (context, state) {
+        return BlocProvider(
+          create:
+              (context) =>
+                  TeamsBloc(joinTeam: serviceLocator(), getTeams: serviceLocator(), createTeam: serviceLocator()),
+          child: Scaffold(
+            key: _scaffoldKey,
+            drawer: AppDrawer(),
+            appBar: TermingoAppBar(scaffoldKey: _scaffoldKey),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [const Text('Welcome to the Home Page!')],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

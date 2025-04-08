@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp.router(
       title: 'Termingo',
-      theme: theme.dark(),
+      theme: theme.lightMediumContrast(),
       routerConfig: AppRouter.router, //
     );
   }

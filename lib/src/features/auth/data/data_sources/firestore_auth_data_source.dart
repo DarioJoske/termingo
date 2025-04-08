@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:termingo/src/core/errors/exceptions.dart';
 
 abstract interface class FirestoreAuthDataSource {
+  User? get currentUser;
   Stream<User?> get authStateChanges;
   Future<User> signUpWithEmailAndPassword({required String email, required String password});
   Future<User> signInWithEmailAndPassword({required String email, required String password});
@@ -66,4 +67,7 @@ class RemoteAuthDataSourceImpl implements FirestoreAuthDataSource {
 
   @override
   Stream<User?> get authStateChanges => firebaseAuth.authStateChanges();
+
+  @override
+  User? get currentUser => firebaseAuth.currentUser;
 }

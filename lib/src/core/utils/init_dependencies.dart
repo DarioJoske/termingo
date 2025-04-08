@@ -16,6 +16,7 @@ import 'package:termingo/src/features/teams/data/repository/teams_repository_imp
 import 'package:termingo/src/features/teams/domain/repositories/team_repository.dart';
 import 'package:termingo/src/features/teams/domain/usecases/create_team.dart';
 import 'package:termingo/src/features/teams/domain/usecases/get_teams.dart';
+import 'package:termingo/src/features/teams/domain/usecases/join_team.dart';
 import 'package:termingo/src/features/teams/presentation/bloc/teams_bloc.dart';
 
 final serviceLocator = GetIt.instance;
@@ -52,6 +53,9 @@ void _initTeams() {
   serviceLocator.registerFactory<TeamRepository>(() => TeamsRepositoryImpl(serviceLocator()));
   serviceLocator.registerFactory<GetTeamsUsecase>(() => GetTeamsUsecase(teamRepository: serviceLocator()));
   serviceLocator.registerFactory<CreateTeamUsecase>(() => CreateTeamUsecase(teamRepository: serviceLocator()));
+  serviceLocator.registerFactory<JoinTeamUsecase>(() => JoinTeamUsecase(teamRepository: serviceLocator()));
 
-  serviceLocator.registerLazySingleton(() => TeamsBloc(createTeam: serviceLocator(), getTeams: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+    () => TeamsBloc(joinTeam: serviceLocator(), createTeam: serviceLocator(), getTeams: serviceLocator()),
+  );
 }

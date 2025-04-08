@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User rules
+    match /users/{userId} {
+      allow create, update, get: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Team rules
+    match /teams/{teamId} {
+      allow create, get, list, update, delete: if request.auth != null;
+    }
+  }
+}
