@@ -28,15 +28,10 @@ class TermingoAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onClosing: () {},
                   builder: (context) {
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 24),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text('Hello, Dario', style: Theme.of(context).textTheme.headlineSmall),
-                          ),
                           // SizedBox(height: 24),
                           ListTile(
                             leading: const Icon(Icons.group_add),

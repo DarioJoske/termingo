@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:termingo/src/core/common/widgets/termingo_text_filed.dart';
 import 'package:termingo/src/features/teams/presentation/bloc/teams_bloc.dart';
 
 class CreateTeamPage extends StatefulWidget {
@@ -30,10 +31,21 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextField(controller: _teamNameController, decoration: const InputDecoration(labelText: 'Team Name')),
+              TermingoTextFormField(
+                controller: _teamNameController,
+                labelText: 'Team Name',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a team name';
+                  }
+                  return null;
+                },
+              ),
               const SizedBox(height: 16),
-              ElevatedButton(
+              FilledButton(
                 onPressed: () {
                   if (_teamNameController.text.isEmpty) {
                     ScaffoldMessenger.of(

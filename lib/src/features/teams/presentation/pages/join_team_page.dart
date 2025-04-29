@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:termingo/src/core/common/widgets/termingo_text_filed.dart';
 import 'package:termingo/src/features/teams/presentation/bloc/teams_bloc.dart';
 
 class JoinTeamPage extends StatefulWidget {
@@ -36,15 +37,11 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Enter team ID to join'),
+                  const Text('Enter team code to join'),
                   const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Team ID'),
-                    keyboardType: TextInputType.text,
-                    controller: _teamIdController,
-                  ),
+                  TermingoTextFormField(labelText: 'Team code', controller: _teamIdController),
                   const SizedBox(height: 20),
-                  ElevatedButton(
+                  FilledButton(
                     onPressed: () {
                       context.read<TeamsBloc>().add(
                         JoinTeam(teamId: _teamIdController.text, userId: widget.currentUserId),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:termingo/src/core/common/widgets/termingo_text_filed.dart';
 import 'package:termingo/src/core/router/routes.dart';
 import 'package:termingo/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 
@@ -28,17 +29,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text(state.message), backgroundColor: Colors.red));
-            } else if (state is AuthAuthenticated) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(const SnackBar(content: Text('Login successful!'), backgroundColor: Colors.green));
             }
           },
           builder: (context, state) {
@@ -47,13 +44,23 @@ class _LoginPageState extends State<LoginPage> {
                 key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Sign In'),
+                    Text(
+                      'TerminGo.',
+                      style: TextStyle(
+                        fontSize: 48,
+                        letterSpacing: 2.0,
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
                     const SizedBox(height: 20),
-                    TextFormField(
+                    Text('Sign In', style: Theme.of(context).textTheme.titleLarge),
+                    const SizedBox(height: 16),
+                    TermingoTextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(labelText: 'Email'),
-                      keyboardType: TextInputType.emailAddress,
+                      labelText: 'Email',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your email';
@@ -65,19 +72,14 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    TextFormField(
+                    TermingoTextFormField(
                       controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            // Toggle password visibility
-                            _togglePasswordVisibility();
-                          },
-                          icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
-                        ),
-                      ),
+                      labelText: 'Password',
                       obscureText: !_isPasswordVisible,
+                      suffixIcon: IconButton(
+                        icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                        onPressed: _togglePasswordVisibility,
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
@@ -90,18 +92,24 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Perform login action
-                          final email = _emailController.text;
-                          final password = _passwordController.text;
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FilledButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              // Perform login action
+                              final email = _emailController.text;
+                              final password = _passwordController.text;
 
-                          // Call your login function here
-                          context.read<AuthBloc>().add(AuthSignIn(email: email, password: password));
-                        }
-                      },
-                      child: const Text('Login'),
+                              // Call your login function here
+                              context.read<AuthBloc>().add(AuthSignIn(email: email, password: password));
+                            }
+                          },
+                          child: const Text('Login'),
+                        ),
+                      ],
                     ),
                     TextButton(
                       onPressed: () {

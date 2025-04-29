@@ -33,20 +33,28 @@ class AppDrawer extends StatelessWidget {
           BlocBuilder<TeamsBloc, TeamsState>(
             builder: (context, state) {
               if (state is TeamsLoaded) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: state.teams.length,
-                    itemBuilder: (context, index) {
-                      final team = state.teams[index];
-                      return ListTile(
-                        title: Text(team.name),
-                        onTap: () {
-                          // context.pop();
-                          context.pushNamed('team', pathParameters: {'teamId': team.id});
-                        },
-                      );
-                    },
-                  ),
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+                    ListView.builder(
+                      itemCount: state.teams.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final team = state.teams[index];
+                        return ListTile(
+                          leading: const Icon(Icons.group),
+                          title: Text(team.name),
+                          subtitle: Text('Id: ${team.id}'),
+                          onTap: () {
+                            // context.pop();
+                            context.pushNamed('team', pathParameters: {'teamId': team.id});
+                          },
+                        );
+                      },
+                    ),
+                  ],
                 );
               }
               return const Expanded(child: Center(child: Text('No teams available')));

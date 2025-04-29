@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:termingo/src/core/common/cubit/current_user_cubit.dart';
 import 'package:termingo/src/core/common/widgets/app_drawer.dart';
 import 'package:termingo/src/core/common/widgets/termingo_app_bar.dart';
@@ -39,4 +40,39 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+}
+
+class MyCalendarEvents extends CalendarDataSource {
+  MyCalendarEvents(List<Meeting> source) {
+    appointments = source;
+  }
+
+  @override
+  DateTime getStartTime(int index) {
+    return appointments![index].from;
+  }
+
+  @override
+  DateTime getEndTime(int index) {
+    return appointments![index].to;
+  }
+
+  @override
+  String getSubject(int index) {
+    return appointments![index].eventName;
+  }
+
+  @override
+  Color getColor(int index) {
+    return appointments![index].background;
+  }
+}
+
+class Meeting {
+  Meeting({required this.eventName, required this.from, required this.to, required this.background});
+
+  String eventName;
+  DateTime from;
+  DateTime to;
+  Color background;
 }
